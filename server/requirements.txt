@@ -1,0 +1,6 @@
+fastmcp==4.1.0
+google-cloud-storage==3.17.0
+google-cloud-firestore==2.34.1
+google-auth==2.62.0
+httpx
+uvicorn==0.54.0
