@@ -7,6 +7,7 @@ from fastmcp.server.auth.providers.google import GoogleProvider
 from fastmcp.server.dependencies import get_access_token
 from fastmcp.server.auth.jwt_issuer import derive_jwt_key
 from key_value.aio.stores.firestore import FirestoreStore
+from key_value.aio.stores.firestore.store import FirestoreV1KeySanitizationStrategy
 from key_value.aio.wrappers.encryption import FernetEncryptionWrapper
 
 from .config import Settings
@@ -40,7 +41,13 @@ def build_auth(s: Settings) -> GoogleProvider | None:
         high_entropy_material=s.jwt_signing_key, salt="reels-studio-client-storage"
     )
     client_storage = FernetEncryptionWrapper(
-        key_value=FirestoreStore(project=s.project_id or None, default_collection="oauth_clients"),
+        key_value=FirestoreStore(
+            project=s.project_id or None,
+            default_collection="oauth_clients",
+            # claude.ai 클라이언트 ID 는 URL 이라 '/' 가 들어간다. Firestore 문서 ID 로 쓸 수 있게 바꾼다.
+            key_sanitization_strategy=FirestoreV1KeySanitizationStrategy(),
+            collection_sanitization_strategy=FirestoreV1KeySanitizationStrategy(),
+        ),
         fernet=Fernet(key=storage_key),
         raise_on_decryption_error=False,
     )
