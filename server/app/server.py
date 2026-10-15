@@ -204,8 +204,8 @@ def build_server(s: Settings, store: Store, storage) -> FastMCP:
         user()
         return _not_yet("reels_templates")
 
-    @mcp.custom_route("/healthz", methods=["GET"])
-    async def healthz(_: Request):
+    @mcp.custom_route("/health", methods=["GET"])
+    async def health(_: Request):
         return JSONResponse({"ok": True})
 
     @mcp.custom_route("/upload", methods=["GET"])
