@@ -3,6 +3,7 @@
 # 여러 번 실행해도 이미 있는 것은 건너뛴다.
 set -euo pipefail
 cd "$(dirname "$0")"
+[ -f ./config.env ] || { echo "deploy/config.env 가 없습니다. README 의 배포하기 1번을 먼저 하세요."; exit 1; }
 source ./config.env
 
 gcloud config set project "$PROJECT_ID" >/dev/null
