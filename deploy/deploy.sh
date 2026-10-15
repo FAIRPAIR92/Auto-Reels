@@ -20,5 +20,5 @@ gcloud run deploy "$SERVICE" \
   --set-secrets="JWT_SIGNING_KEY=reels-jwt-key:latest,GOOGLE_OAUTH_CLIENT_ID=reels-oauth-client-id:latest,GOOGLE_OAUTH_CLIENT_SECRET=reels-oauth-client-secret:latest"
 
 echo
-echo "✅ 배포 완료. 상태 확인: $BASE_URL/healthz"
+echo "✅ 배포 완료. 상태 확인: $BASE_URL/health"
 echo "claude.ai 커스텀 커넥터 주소: $BASE_URL/mcp"
